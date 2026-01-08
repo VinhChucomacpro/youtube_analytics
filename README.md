@@ -1,4 +1,4 @@
-# Sơn Tùng M-TP Analytics
+# Youtube Analytics
 
 Theo dõi hiệu năng kênh YouTube Sơn Tùng M-TP nhờ bộ mô hình **dbt** và pipeline **Apache Airflow** (Astro) đổ dữ liệu vào **Snowflake**.
 
@@ -55,7 +55,6 @@ Astro dựng các service trong Docker và mở UI tại `http://localhost:8080`
 | --- | --- |
 | [`dbt_youtube`](dbt_youtube) | Project dbt chính, seeds, models, macros. |
 | [`dbt_youtube_dag`](dbt_youtube_dag) | Môi trường Astro/Airflow, DAG orchestration. |
-| [`imgs`](imgs) | Tài sản minh hoạ dashboard (nếu có). |
 | [`snowflake-create-wh`](snowflake-create-wh) | Script/tài liệu tạo warehouse Snowflake. |
 
 ## Kiểm thử & CI
