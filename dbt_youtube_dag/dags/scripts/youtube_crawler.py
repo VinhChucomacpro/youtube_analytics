@@ -6,7 +6,7 @@ from typing import Optional
 import snowflake.connector
 
 # API Key từ biến môi trường
-API_KEY = os.getenv('YOUTUBE_API_KEY', 'AIzaSyDmJRwO5FX80wz34R43gzW_cykWZZ062qI')
+API_KEY = os.getenv('YOUTUBE_API_KEY', 'xxxxx')
 CHANNEL_ID = "UClyA28-01x4z60eWQ2kiNbA"
 SEEDS_PATH = "/usr/local/airflow/dags/dbt/dbt_youtube/seeds"
 
