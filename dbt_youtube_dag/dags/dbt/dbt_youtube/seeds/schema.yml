@@ -1,0 +1,57 @@
+version: 2
+
+seeds:
+  - name: channels
+    config:
+      quote_columns: false
+      
+  - name: playlists
+    config:
+      quote_columns: false
+
+  - name: video_stats
+    config:
+      quote_columns: false
+
+  - name: playlist_items
+    config:
+      quote_columns: false
+    columns:
+      - name: playlist_item_id  # ✅ Có underscore
+      - name: playlist_id
+      - name: video_id
+      - name: position
+      - name: added_at
+
+  - name: video_comments
+    description: "Raw comments data từ YouTube API"
+    config:
+      quote_columns: false
+      column_types:
+        comment_text: varchar(16777216)  # Max length cho Snowflake
+    columns:
+      - name: comment_id
+        description: "ID unique của comment"
+        tests:
+          - unique
+          - not_null
+      - name: video_id
+        description: "ID của video được comment"
+        tests:
+          - not_null
+      - name: author_name
+        description: "Tên người comment"
+      - name: author_channel_id
+        description: "Channel ID của người comment"
+      - name: comment_text
+        description: "Nội dung comment"
+        tests:
+          - not_null
+      - name: like_count
+        description: "Số lượt thích của comment"
+      - name: published_at
+        description: "Thời gian đăng comment"
+      - name: updated_at
+        description: "Thời gian cập nhật comment"
+      - name: reply_count
+        description: "Số lượng reply"

@@ -1,0 +1,55 @@
+name: 'dbt_youtube'
+version: '1.0.0'
+config-version: 2
+
+profile: 'dbt_youtube'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  dbt_youtube:
+    bronze:
+      +materialized: view
+      +tags: ['bronze']
+    silver:
+      +materialized: table
+      +tags: ['silver']
+    gold:
+      +materialized: table
+      +tags: ['gold']
+
+seeds:
+  dbt_youtube:
+    +quote_columns: false
+    +enabled: true
+    # ✅ GLOBAL column types cho TẤT CẢ seeds
+    +column_types:
+      video_desc: varchar(16777216)
+      video_title: varchar(16777216)
+      playlist_desc: varchar(16777216)
+      comment_text: varchar(16777216)
+      
+    # ✅ SPECIFIC cho từng seed file
+    video_stats:
+      +column_types:
+        video_desc: varchar(16777216)
+        video_title: varchar(16777216)
+        live_actual_start: varchar(50)
+        live_actual_end: varchar(50)
+        live_scheduled_start: varchar(50)
+
+snapshots:
+  dbt_youtube:
+    +target_schema: snapshots
+    +unique_key: video_id
+    +strategy: timestamp
+    +updated_at: updated_at

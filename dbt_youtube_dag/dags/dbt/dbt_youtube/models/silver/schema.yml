@@ -1,0 +1,63 @@
+version: 2
+models:
+  - name: stg_channels
+    description: "Standardized channels"
+    columns:
+      - name: channel_id
+        tests: [unique, not_null]
+
+  - name: stg_playlists
+    description: "Standardized playlists"
+    columns:
+      - name: playlist_id
+        tests: [unique, not_null]
+      - name: channel_id
+        tests:
+          - relationships:
+              to: ref('stg_channels')
+              field: channel_id
+
+  - name: stg_videos
+    description: "Playlist items joined with video stats"
+    columns:
+      - name: video_id
+        tests: [not_null]
+      - name: playlist_id
+        tests:
+          - relationships:
+              to: ref('stg_playlists')
+              field: playlist_id
+  - name: stg_comments
+    description: "Silver layer - Cleaned comments with sentiment analysis"
+    config:
+      tags: ['silver', 'comments']
+    columns:
+      - name: comment_id
+        description: "Unique comment ID"
+        tests:
+          - unique
+          - not_null
+      
+      - name: video_id
+        description: "Video ID"
+        tests:
+          - not_null
+          # - relationships:
+          #     to: ref('stg_videos')
+          #     field: video_id
+      
+      - name: sentiment
+        description: "Sentiment classification: POSITIVE, NEGATIVE, NEUTRAL"
+        tests:
+          - accepted_values:
+              values: ['POSITIVE', 'NEGATIVE', 'NEUTRAL']
+      
+      - name: comment_length
+        description: "Length of comment text"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 10000
+      
+      - name: engagement_score
+        description: "Calculated engagement score based on likes, replies, mentions"

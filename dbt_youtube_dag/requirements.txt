@@ -1,0 +1,8 @@
+astronomer-cosmos
+apache-airflow-providers-snowflake
+dbt-snowflake
+dbt-core
+pandas
+google-api-python-client
+python-dotenv
+snowflake-connector-python 

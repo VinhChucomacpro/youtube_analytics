@@ -1,0 +1,4 @@
+project:
+    name: dbt-youtube-dag
+postgres:
+  port: 5435
